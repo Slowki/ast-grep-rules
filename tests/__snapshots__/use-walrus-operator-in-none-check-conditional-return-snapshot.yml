@@ -1,0 +1,36 @@
+id: use-walrus-operator-in-none-check-conditional-return
+snapshots:
+  ? |
+    value = getattr(instance, "id", None)
+    return int(value) if value is not None else None
+  : fixed: |
+      value = getattr(instance, "id", None)
+      return int(value) if (value := getattr(instance, "id", None)) is not None else None
+    labels:
+    - source: return int(value) if value is not None else None
+      style: primary
+      start: 38
+      end: 86
+    - source: value = getattr(instance, "id", None)
+      style: secondary
+      start: 0
+      end: 37
+    - source: value
+      style: secondary
+      start: 49
+      end: 54
+  ? |
+    value = getattr(instance, "id", None)
+    return value if value is not None else None
+  : fixed: |
+      value = getattr(instance, "id", None)
+      return value if (value := getattr(instance, "id", None)) is not None else None
+    labels:
+    - source: return value if value is not None else None
+      style: primary
+      start: 38
+      end: 81
+    - source: value = getattr(instance, "id", None)
+      style: secondary
+      start: 0
+      end: 37

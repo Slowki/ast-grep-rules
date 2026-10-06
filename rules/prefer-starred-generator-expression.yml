@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: prefer-starred-generator-expression
+language: python
+severity: warning
+description: Use generator expressions instead of expanding list comprehensions with `*`.
+rule:
+  pattern:
+    context: "placeholder(*$COMPREHENSION)"
+    selector: list_splat
+constraints:
+  COMPREHENSION:
+    kind: list_comprehension
+transform:
+  INNER:
+    substring:
+      source: $COMPREHENSION
+      startChar: 1
+      endChar: -1
+fix: "*($INNER)"

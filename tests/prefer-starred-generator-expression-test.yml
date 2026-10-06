@@ -1,0 +1,15 @@
+id: prefer-starred-generator-expression
+valid:
+  - |
+    print(*(value for value in values))
+  - |
+    print(*values)
+  - |
+    print(*[first_value, second_value])
+invalid:
+  - |
+    print(*[value for value in values])
+  - |
+    print(*[value for value in values if value > 0])
+  - |
+    print(*[(value, suffix) for value in values for suffix in suffixes])

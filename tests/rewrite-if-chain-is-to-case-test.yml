@@ -1,0 +1,41 @@
+id: rewrite-if-chain-is-to-case
+valid:
+  - |
+    if identifier_here is value_here:
+        do_x()
+    else:
+        do_z()
+  - |
+    if identifier_here is value_here:
+        do_x()
+    elif identifier_here > value_here:
+        do_y()
+    else:
+        do_z()
+  - |
+    if identifier_here is value_here:
+        do_x()
+    elif other_identifier is other_value:
+        do_y()
+    elif identifier_here is third_value:
+        do_y2()
+    else:
+        do_z()
+  - |
+    if identifier_here is value_here:
+        do_x()
+    elif identifier_here is other_value:
+        do_y()
+invalid:
+  - |
+    if identifier_here is value_here:
+        # First branch comment.
+        do_x()
+        do_x2()
+    elif identifier_here is other_value:
+        # Second branch comment.
+        do_y()
+    elif identifier_here is third_value:
+        do_y2()
+    else:
+        do_z()

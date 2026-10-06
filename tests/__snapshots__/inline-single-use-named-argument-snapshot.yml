@@ -1,0 +1,95 @@
+id: inline-single-use-named-argument
+snapshots:
+  ? |
+    instance = ClassA()
+    result = function_a(
+      arg,
+      instance=instance,
+    )
+  : fixed: |
+      instance = ClassA()
+      result = function_a(
+        arg,
+        instance=ClassA(),
+      )
+    labels:
+    - source: instance=instance
+      style: primary
+      start: 50
+      end: 67
+    - source: instance = ClassA()
+      style: secondary
+      start: 0
+      end: 19
+    - source: |-
+        result = function_a(
+          arg,
+          instance=instance,
+        )
+      style: secondary
+      start: 20
+      end: 70
+  ? |
+    return_value = function_f([function_g()])
+    completion_mock = AsyncMock(return_value=return_value)
+  : fixed: |
+      return_value = function_f([function_g()])
+      completion_mock = AsyncMock(return_value=function_f([function_g()]))
+    labels:
+    - source: return_value=return_value
+      style: primary
+      start: 70
+      end: 95
+    - source: return_value = function_f([function_g()])
+      style: secondary
+      start: 0
+      end: 41
+    - source: completion_mock = AsyncMock(return_value=return_value)
+      style: secondary
+      start: 42
+      end: 96
+  ? |
+    value = 1.0 / len(items)
+    ClassC(value=value)
+  : fixed: |
+      value = 1.0 / len(items)
+      ClassC(value=1.0 / len(items))
+    labels:
+    - source: value=value
+      style: primary
+      start: 32
+      end: 43
+    - source: value = 1.0 / len(items)
+      style: secondary
+      start: 0
+      end: 24
+    - source: ClassC(value=value)
+      style: secondary
+      start: 25
+      end: 44
+  ? |
+    value = instance_a.attr
+    result = await instance.function_e(
+      value=value,
+    )
+  : fixed: |
+      value = instance_a.attr
+      result = await instance.function_e(
+        value=instance_a.attr,
+      )
+    labels:
+    - source: value=value
+      style: primary
+      start: 62
+      end: 73
+    - source: value = instance_a.attr
+      style: secondary
+      start: 0
+      end: 23
+    - source: |-
+        result = await instance.function_e(
+          value=value,
+        )
+      style: secondary
+      start: 24
+      end: 76

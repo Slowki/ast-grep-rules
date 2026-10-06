@@ -1,0 +1,12 @@
+id: pytest-type-hint-fixture
+valid:
+  - |
+    def regular_function(foo):
+        return foo
+  - |
+    def test_code(bar):
+        return bar
+invalid:
+  - |
+    def test_code(foo):
+        return foo

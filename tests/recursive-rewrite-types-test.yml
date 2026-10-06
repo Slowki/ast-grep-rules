@@ -1,0 +1,15 @@
+id: recursive-rewrite-types
+valid:
+  - |
+    def parse(value):
+        return value
+  - |
+    def parse(value: int, values: list[int]) -> str | None:
+        return value
+invalid:
+  - |
+    def parse(value: Optional[Union[int, str]]) -> Union[int, str]:
+        return value
+  - |
+    def parse(value: list[Optional[int]]) -> list[Optional[int]]:
+        return value

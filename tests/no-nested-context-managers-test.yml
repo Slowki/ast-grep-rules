@@ -1,0 +1,57 @@
+id: no-nested-context-managers-sync
+valid:
+  - |
+    with foo:
+        x = 1
+  - |
+    with foo, bar:
+        x = 1
+  - |
+    with outer:
+        y = 1
+        with inner:
+            z = 1
+  - |
+    async with outer:
+        with inner:
+            z = 1
+  - |
+    with outer:
+        async with inner:
+            z = 1
+  - |
+    with foo:
+        # setup
+        with bar:
+            pass
+invalid:
+  - |
+    with foo:
+        with bar:
+            x = 1
+  - |
+    with open("a") as fa:
+        with open("b") as fb:
+            pass
+---
+id: no-nested-context-managers-async
+valid:
+  - |
+    async with foo:
+        x = 1
+  - |
+    async with foo, bar:
+        x = 1
+  - |
+    async with outer:
+        with inner:
+            z = 1
+  - |
+    with outer:
+        async with inner:
+            z = 1
+invalid:
+  - |
+    async with foo:
+        async with bar:
+            x = 1

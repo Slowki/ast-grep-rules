@@ -1,0 +1,24 @@
+id: recursive-rewrite-types
+snapshots:
+  ? |
+    def parse(value: Optional[Union[int, str]]) -> Union[int, str]:
+        return value
+  : fixed: |
+      def parse(value: int | str | None) -> Union[int, str]:
+          return value
+    labels:
+    - source: Optional[Union[int, str]]
+      style: primary
+      start: 17
+      end: 42
+  ? |
+    def parse(value: list[Optional[int]]) -> list[Optional[int]]:
+        return value
+  : fixed: |
+      def parse(value: list[int | None]) -> list[Optional[int]]:
+          return value
+    labels:
+    - source: Optional[int]
+      style: primary
+      start: 22
+      end: 35

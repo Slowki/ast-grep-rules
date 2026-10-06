@@ -1,0 +1,27 @@
+id: pytest-type-hint-fixture
+snapshots:
+  ? |
+    def test_code(foo):
+        return foo
+  : fixed: |
+      def test_code(foo: int):
+          return foo
+    labels:
+    - source: foo
+      style: primary
+      start: 14
+      end: 17
+    - source: test_code
+      style: secondary
+      start: 4
+      end: 13
+    - source: |-
+        def test_code(foo):
+            return foo
+      style: secondary
+      start: 0
+      end: 34
+    - source: (foo)
+      style: secondary
+      start: 13
+      end: 18

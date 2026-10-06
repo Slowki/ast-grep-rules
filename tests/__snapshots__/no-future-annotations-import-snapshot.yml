@@ -1,0 +1,30 @@
+id: no-future-annotations-import
+snapshots:
+  ? |
+    from __future__ import (annotations)
+
+    x: int = 1
+  : fixed: |2
+
+
+      x: int = 1
+    labels:
+    - source: from __future__ import (annotations)
+      style: primary
+      start: 0
+      end: 36
+  ? |
+    from __future__ import annotations
+
+    def f() -> list[int]:
+        return []
+  : fixed: |2
+
+
+      def f() -> list[int]:
+          return []
+    labels:
+    - source: from __future__ import annotations
+      style: primary
+      start: 0
+      end: 34

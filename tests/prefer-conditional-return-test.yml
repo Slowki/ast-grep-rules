@@ -1,0 +1,26 @@
+id: prefer-conditional-return
+valid:
+  - |
+    return instance.value if instance.value is not None else "fallback"
+  - |
+    if instance.value is not None:
+      print(instance.value)
+      return instance.value
+    return "fallback"
+  - |
+    if instance.value is not None:
+      return instance.other
+    return "fallback"
+  - |
+    if instance.value:
+      return instance.value
+    return "fallback"
+invalid:
+  - |
+    if instance.value is not None:
+      return instance.value
+    return "fallback"
+  - |
+    if name is not None:
+      return name
+    return "fallback"

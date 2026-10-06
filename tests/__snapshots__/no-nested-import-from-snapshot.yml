@@ -1,0 +1,79 @@
+id: no-nested-import-from
+snapshots:
+  ? |
+    class C:
+        from os import path
+  : labels:
+    - source: from os import path
+      style: primary
+      start: 13
+      end: 32
+    - source: |-
+        class C:
+            from os import path
+      style: secondary
+      start: 0
+      end: 32
+  ? |
+    def f():
+        from os import path
+  : labels:
+    - source: from os import path
+      style: primary
+      start: 13
+      end: 32
+    - source: |-
+        def f():
+            from os import path
+      style: secondary
+      start: 0
+      end: 32
+  ? |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        if True:
+            from os import path
+  : labels:
+    - source: from os import path
+      style: primary
+      start: 73
+      end: 92
+    - source: |-
+        if True:
+                from os import path
+      style: secondary
+      start: 56
+      end: 92
+  ? |
+    if True:
+        from os import path
+  : labels:
+    - source: from os import path
+      style: primary
+      start: 13
+      end: 32
+    - source: |-
+        if True:
+            from os import path
+      style: secondary
+      start: 0
+      end: 32
+  ? |
+    try:
+        from os import path
+    except ImportError:
+        pass
+  : labels:
+    - source: from os import path
+      style: primary
+      start: 9
+      end: 28
+    - source: |-
+        try:
+            from os import path
+        except ImportError:
+            pass
+      style: secondary
+      start: 0
+      end: 57

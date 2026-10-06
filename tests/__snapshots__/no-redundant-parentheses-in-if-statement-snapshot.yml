@@ -1,0 +1,36 @@
+id: no-redundant-parentheses-in-if-statement
+snapshots:
+  ? |
+    if (len(args) > 1):
+      return f"command {args[1]}"
+  : fixed: |
+      if len(args) > 1:
+        return f"command {args[1]}"
+    labels:
+    - source: (len(args) > 1)
+      style: primary
+      start: 3
+      end: 18
+    - source: |-
+        if (len(args) > 1):
+          return f"command {args[1]}"
+      style: secondary
+      start: 0
+      end: 49
+  ? |
+    if (value := get_value()):
+      return "present"
+  : fixed: |
+      if value := get_value():
+        return "present"
+    labels:
+    - source: (value := get_value())
+      style: primary
+      start: 3
+      end: 25
+    - source: |-
+        if (value := get_value()):
+          return "present"
+      style: secondary
+      start: 0
+      end: 45

@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: inline-single-use-named-argument
+language: python
+severity: warning
+description: Inline adjacent assignments used only as same-name keyword arguments.
+rule:
+  all:
+    - pattern:
+        context: placeholder($$VARIABLE=$VARIABLE)
+        selector: keyword_argument
+    - inside:
+        all:
+          - kind: expression_statement
+          - follows:
+              pattern:
+                context: $VARIABLE = $EXPRESSION
+                selector: expression_statement
+              stopBy: neighbor
+          - not:
+              precedes:
+                has:
+                  pattern: $VARIABLE
+                  stopBy: end
+                stopBy: end
+        stopBy: end
+constraints:
+  EXPRESSION:
+    not:
+      pattern: await $AWAITABLE
+fix: $VARIABLE=$EXPRESSION
+---
+id: remove-inlined-single-use-named-argument
+language: python
+severity: warning
+rule:
+  all:
+    - pattern:
+        context: $VARIABLE = $EXPRESSION
+        selector: expression_statement
+    - precedes:
+        all:
+          - kind: expression_statement
+          - has:
+              pattern:
+                context: placeholder($$VARIABLE=$VARIABLE)
+                selector: keyword_argument
+              stopBy: end
+          - not:
+              precedes:
+                has:
+                  pattern: $VARIABLE
+                  stopBy: end
+                stopBy: end
+        stopBy: neighbor
+constraints:
+  EXPRESSION:
+    not:
+      pattern: await $AWAITABLE
+fix: ""

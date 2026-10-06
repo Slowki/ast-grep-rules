@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-nested-import-statement
+language: python
+severity: warning
+description: Disallow `import` except at module level or directly under `if TYPE_CHECKING`.
+rule:
+  all:
+    - pattern: import $M
+    - inside:
+        any:
+          - kind: function_definition
+          - kind: class_definition
+          - kind: try_statement
+          - kind: with_statement
+          - kind: for_statement
+          - kind: while_statement
+          - kind: if_statement
+          - kind: match_statement
+        stopBy: end
+    - not:
+        inside:
+          pattern: |
+            if TYPE_CHECKING:
+              $$$PRE
+              import $M
+          stopBy: end
+---
+id: no-nested-import-from
+language: python
+severity: warning
+description: Disallow `from … import` except at module level or directly under `if TYPE_CHECKING`.
+rule:
+  all:
+    - pattern: from $M import $N
+    - inside:
+        any:
+          - kind: function_definition
+          - kind: class_definition
+          - kind: try_statement
+          - kind: with_statement
+          - kind: for_statement
+          - kind: while_statement
+          - kind: if_statement
+          - kind: match_statement
+        stopBy: end
+    - not:
+        inside:
+          pattern: |
+            if TYPE_CHECKING:
+              $$$PRE
+              from $M import $N
+          stopBy: end

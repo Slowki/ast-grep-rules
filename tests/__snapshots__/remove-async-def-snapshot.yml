@@ -1,0 +1,15 @@
+id: remove-async-def
+snapshots:
+  ? |
+    async def fetch():
+        await request()
+  : fixed: |
+      def fetch():
+        request()
+    labels:
+    - source: |-
+        async def fetch():
+            await request()
+      style: primary
+      start: 0
+      end: 38

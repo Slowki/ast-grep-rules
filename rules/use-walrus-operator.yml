@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: use-walrus-operator
+language: python
+severity: warning
+description: Use walrus operator to assign variables in expressions.
+rule:
+  all:
+    - pattern: |
+        if $VAR:
+          $$$A
+          return $$$B
+    - follows:
+        pattern:
+          context: $VAR = $$$EXPR
+          selector: expression_statement
+        stopBy: end
+    - has:
+        field: consequence
+        pattern: $VAR
+        stopBy: end
+fix: |-
+  if $VAR := $$$EXPR:
+    $$$A
+    return $$$B
+---
+id: walrus-remove-declaration
+language: python
+severity: warning
+rule:
+  all:
+    - pattern:
+        context: $VAR = $$$EXPR
+        selector: expression_statement
+    - precedes:
+        all:
+          - pattern: |
+              if $VAR:
+                $$$A
+                return $$$B
+          - has:
+              field: consequence
+              pattern: $VAR
+              stopBy: end
+        stopBy: end
+fix: ""
+---
+id: use-walrus-operator-in-conditional-return
+language: python
+severity: warning
+description: Use walrus operator to assign variables in conditional returns.
+rule:
+  all:
+    - pattern: return $CONSEQUENCE if $VARIABLE else $ALTERNATIVE
+    - follows:
+        pattern:
+          context: $VARIABLE = $$$EXPRESSION
+          selector: expression_statement
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    any:
+      - pattern: $VARIABLE
+      - has:
+          pattern: $VARIABLE
+          stopBy: end
+fix: return $CONSEQUENCE if ($VARIABLE := $$$EXPRESSION) else $ALTERNATIVE
+---
+id: remove-conditional-return-declaration
+language: python
+severity: warning
+rule:
+  all:
+    - pattern:
+        context: $VARIABLE = $$$EXPRESSION
+        selector: expression_statement
+    - precedes:
+        pattern: return $CONSEQUENCE if $VARIABLE else $ALTERNATIVE
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    any:
+      - pattern: $VARIABLE
+      - has:
+          pattern: $VARIABLE
+          stopBy: end
+fix: ""
+---
+id: use-walrus-operator-in-none-check-conditional-return
+language: python
+severity: warning
+description: Use walrus operator to assign variables in none-check conditional returns.
+rule:
+  all:
+    - pattern: return $CONSEQUENCE if $VARIABLE is not None else $ALTERNATIVE
+    - follows:
+        pattern:
+          context: $VARIABLE = $$$EXPRESSION
+          selector: expression_statement
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    any:
+      - pattern: $VARIABLE
+      - has:
+          pattern: $VARIABLE
+          stopBy: end
+fix: return $CONSEQUENCE if ($VARIABLE := $$$EXPRESSION) is not None else $ALTERNATIVE
+---
+id: remove-none-check-conditional-return-declaration
+language: python
+severity: warning
+rule:
+  all:
+    - pattern:
+        context: $VARIABLE = $$$EXPRESSION
+        selector: expression_statement
+    - precedes:
+        pattern: return $CONSEQUENCE if $VARIABLE is not None else $ALTERNATIVE
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    any:
+      - pattern: $VARIABLE
+      - has:
+          pattern: $VARIABLE
+          stopBy: end
+fix: ""

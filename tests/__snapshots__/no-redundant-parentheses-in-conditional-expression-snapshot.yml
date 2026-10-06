@@ -1,0 +1,20 @@
+id: no-redundant-parentheses-in-conditional-expression
+snapshots:
+  ? |
+    return "present" if (value and enabled) else "missing"
+  : fixed: |
+      return "present" if value and enabled else "missing"
+    labels:
+    - source: '"present" if (value and enabled) else "missing"'
+      style: primary
+      start: 7
+      end: 54
+  ? |
+    return f"command {args[1]}" if (len(args) > 1) else "command"
+  : fixed: |
+      return f"command {args[1]}" if len(args) > 1 else "command"
+    labels:
+    - source: f"command {args[1]}" if (len(args) > 1) else "command"
+      style: primary
+      start: 7
+      end: 61

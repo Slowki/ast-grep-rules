@@ -1,0 +1,50 @@
+id: recursive-rewrite-types
+language: python
+rewriters:
+  - id: optional
+    rule:
+      any:
+        - pattern:
+            context: "arg: Optional[$TYPE]"
+            selector: generic_type
+        - pattern: Optional[$TYPE]
+    transform:
+      NT:
+        rewrite:
+          rewriters: [optional, unions]
+          source: $TYPE
+    fix: $NT | None
+  - id: unions
+    language: python
+    rule:
+      pattern:
+        context: "a: Union[$$$TYPES]"
+        selector: generic_type
+    transform:
+      UNIONS:
+        rewrite:
+          rewriters: [rewrite-unions]
+          source: $$$TYPES
+          joinBy: " | "
+    fix: $UNIONS
+  - id: rewrite-unions
+    rule:
+      pattern: $TYPE
+      kind: type
+    transform:
+      NT:
+        rewrite:
+          rewriters: [optional, unions]
+          source: $TYPE
+    fix: $NT
+rule:
+  all:
+    - kind: generic_type
+    - pattern: $TPE
+    - regex: "^(Optional|Union)\\["
+transform:
+  NEW_TYPE:
+    rewrite:
+      rewriters: [optional, unions]
+      source: $TPE
+fix: $NEW_TYPE

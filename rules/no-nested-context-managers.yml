@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-nested-context-managers-sync
+language: python
+severity: warning
+description: Prefer a single `with` with multiple context managers instead of nesting.
+rule:
+  all:
+    - any:
+        - pattern: |
+            with ($OUTER):
+              with ($INNER):
+                $$$BODY
+        - pattern: |
+            with ($OUTER):
+              with $INNER:
+                $$$BODY
+        - pattern: |
+            with $OUTER:
+              with ($INNER):
+                $$$BODY
+        - pattern: |
+            with $OUTER:
+              with $INNER:
+                $$$BODY
+    - not:
+        regex: ^async\s
+    - not:
+        regex: async\s+with
+fix: |-
+  with ($OUTER, $INNER):
+    $$$BODY
+---
+id: no-nested-context-managers-async
+language: python
+severity: warning
+description: Prefer a single `async with` with multiple context managers instead of nesting.
+rule:
+  any:
+    - pattern: |
+        async with ($OUTER):
+          async with ($INNER):
+            $$$BODY
+    - pattern: |
+        async with ($OUTER):
+          async with $INNER:
+            $$$BODY
+    - pattern: |
+        async with $OUTER:
+          async with ($INNER):
+            $$$BODY
+    - pattern: |
+        async with $OUTER:
+          async with $INNER:
+            $$$BODY
+fix: |-
+  async with ($OUTER, $INNER):
+    $$$BODY

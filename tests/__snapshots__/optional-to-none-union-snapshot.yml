@@ -1,0 +1,13 @@
+id: optional-to-none-union
+snapshots:
+  ? |
+    def parse(value: Optional[int]) -> int:
+        return value
+  : fixed: |
+      def parse(value: int | None) -> int:
+          return value
+    labels:
+    - source: Optional[int]
+      style: primary
+      start: 17
+      end: 30

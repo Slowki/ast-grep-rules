@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: rewrite-if-chain-is-to-case
+language: python
+severity: warning
+description: Rewrite strict `is` if chains as match statements.
+rewriters:
+  - id: rewrite-elif-clause
+    rule:
+      kind: elif_clause
+      all:
+        - has:
+            field: condition
+            pattern: $ELIF_IDENT is $ELIF_VALUE
+        - has:
+            field: consequence
+            pattern:
+              context: $ELIF_BODY
+              strictness: cst
+    fix: |-
+      case $ELIF_VALUE:
+        $ELIF_BODY
+rule:
+  all:
+    - pattern:
+        context: |
+          if $IDENT is $FIRST_VALUE:
+            $$$BODY
+          else:
+            $$$ELSE_BODY
+        strictness: cst
+    - has:
+        field: alternative
+        kind: elif_clause
+    - has:
+        field: consequence
+        pattern:
+          context: $FIRST_BODY
+          strictness: cst
+    - not:
+        has:
+          field: alternative
+          kind: elif_clause
+          not:
+            has:
+              field: condition
+              pattern: $IDENT is $Y
+              stopBy: end
+constraints:
+  IDENT:
+    kind: identifier
+transform:
+  CASES:
+    rewrite:
+      rewriters: [rewrite-elif-clause]
+      source: $$$BODY
+      joinBy: "\n"
+fix: |-
+  match $IDENT:
+    case $FIRST_VALUE:
+      $FIRST_BODY
+    $CASES
+    case _:
+      $$$ELSE_BODY

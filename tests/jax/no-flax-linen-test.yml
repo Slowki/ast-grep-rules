@@ -1,0 +1,29 @@
+id: no-flax-linen
+valid:
+  - |
+    from flax import nnx
+  - |
+    from flax import serialization, struct
+  - |
+    from other_library import linen
+  - |
+    import flax
+invalid:
+  - |
+    from flax import linen
+  - |
+    from flax import linen as nn
+  - |
+    from flax import linen as nn, serialization
+  - |
+    from flax import linen, serialization
+  - |
+    from flax import serialization, linen
+  - |
+    from flax.linen import Dense, LayerNorm
+  - |
+    import flax.linen
+  - |
+    import flax.linen as nn
+  - |
+    import flax.linen.attention

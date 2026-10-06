@@ -1,0 +1,36 @@
+id: use-walrus-operator-in-conditional-return
+snapshots:
+  ? |
+    value = function_a(arg)
+    return value[-1] if value else None
+  : fixed: |
+      value = function_a(arg)
+      return value[-1] if (value := function_a(arg)) else None
+    labels:
+    - source: return value[-1] if value else None
+      style: primary
+      start: 24
+      end: 59
+    - source: value = function_a(arg)
+      style: secondary
+      start: 0
+      end: 23
+    - source: value
+      style: secondary
+      start: 31
+      end: 36
+  ? |
+    x = get_id()
+    return x if x else None
+  : fixed: |
+      x = get_id()
+      return x if (x := get_id()) else None
+    labels:
+    - source: return x if x else None
+      style: primary
+      start: 13
+      end: 36
+    - source: x = get_id()
+      style: secondary
+      start: 0
+      end: 12

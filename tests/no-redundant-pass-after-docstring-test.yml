@@ -1,0 +1,31 @@
+id: no-redundant-pass-after-docstring
+valid:
+  - |
+    def only_pass() -> None:
+        pass
+  - |
+    def has_body() -> None:
+        """Doc."""
+        return 1
+  - |
+    def has_body2() -> None:
+        """Doc."""
+        x = 1
+        pass
+  - |
+    class C:
+        pass
+invalid:
+  - |
+    class A:
+        def b(self) -> None:
+            """My thing."""
+            pass
+  - |
+    def documented_empty() -> None:
+        """Only a docstring."""
+        pass
+  - |
+    async def async_doc() -> None:
+        """Async."""
+        pass

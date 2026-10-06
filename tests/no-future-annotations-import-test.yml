@@ -1,0 +1,18 @@
+id: no-future-annotations-import
+valid:
+  - |
+    from typing import Annotated
+
+    x: Annotated[int, "meta"]
+  - |
+    from __future__ import print_function
+invalid:
+  - |
+    from __future__ import annotations
+
+    def f() -> list[int]:
+        return []
+  - |
+    from __future__ import (annotations)
+
+    x: int = 1

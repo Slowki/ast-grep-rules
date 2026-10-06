@@ -1,0 +1,33 @@
+id: pytest-type-hint-fixture
+language: python
+severity: warning
+utils:
+  is-fixture-function:
+    kind: function_definition
+    follows:
+      kind: decorator
+      has:
+        kind: identifier
+        regex: ^fixture$
+        stopBy: end
+  is-test-function:
+    kind: function_definition
+    has:
+      field: name
+      regex: ^test_
+  is-pytest-context:
+    inside:
+      stopBy: end
+      any:
+        - matches: is-fixture-function
+        - matches: is-test-function
+  is-fixture-arg:
+    all:
+      - kind: identifier
+      - matches: is-pytest-context
+      - inside:
+          kind: parameters
+rule:
+  matches: is-fixture-arg
+  regex: ^foo$
+fix: "foo: int"

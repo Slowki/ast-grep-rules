@@ -1,0 +1,48 @@
+id: use-walrus-operator
+snapshots:
+  ? |
+    x = get_id()
+    if x:
+      return x
+  : fixed: "x = get_id()\nif x := get_id():\n  \n  return x\n"
+    labels:
+    - source: |-
+        if x:
+          return x
+      style: primary
+      start: 13
+      end: 29
+    - source: x = get_id()
+      style: secondary
+      start: 0
+      end: 12
+    - source: x
+      style: secondary
+      start: 28
+      end: 29
+  ? |
+    x = get_id()
+    if x:
+      z = y + 1
+      return x
+  : fixed: |
+      x = get_id()
+      if x := get_id():
+        z = y + 1
+        return x
+    labels:
+    - source: |-
+        if x:
+          z = y + 1
+          return x
+      style: primary
+      start: 13
+      end: 41
+    - source: x = get_id()
+      style: secondary
+      start: 0
+      end: 12
+    - source: x
+      style: secondary
+      start: 40
+      end: 41

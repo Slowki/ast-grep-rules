@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-flax-linen
+language: python
+severity: error
+description: "Use Flax NNX (`from flax import nnx`) instead of Linen."
+rule:
+  any:
+    - all:
+        - pattern: from flax import $$$IMPORTS
+        - has:
+            pattern: $NAME
+            regex: "^linen$"
+    - all:
+        - pattern: from flax import $$$IMPORTS
+        - has:
+            pattern: linen as $ALIAS
+    - pattern: from flax import linen as $ALIAS
+    - pattern: from flax.linen import $$$NAMES
+    - pattern: import flax.linen
+    - pattern: import flax.linen as $ALIAS
+    - pattern: import flax.linen.$$$MODULES

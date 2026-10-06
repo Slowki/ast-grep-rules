@@ -1,0 +1,21 @@
+id: no-redundant-parentheses-in-conditional-expression
+valid:
+  - |
+    return f"command {args[1]}" if len(args) > 1 else "command"
+  - |
+    return "present" if (value := get_value()) else "missing"
+  - |
+    return "present" if (lambda value: value) else "missing"
+  - |
+    return "present" if (a, b) else "missing"
+  - |
+    if len(args) > 1:
+      return f"command {args[1]}"
+  - |
+    if (lambda value: value):
+      return "present"
+invalid:
+  - |
+    return f"command {args[1]}" if (len(args) > 1) else "command"
+  - |
+    return "present" if (value and enabled) else "missing"

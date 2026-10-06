@@ -1,0 +1,17 @@
+id: inline-single-use-attribute-assignment
+snapshots:
+  ? |
+    first = items[0]
+    return str(result) if (result := first.attr) else None
+  : fixed: |
+      first = items[0]
+      return str(result) if (result := items[0].attr) else None
+    labels:
+    - source: return str(result) if (result := first.attr) else None
+      style: primary
+      start: 17
+      end: 71
+    - source: first = items[0]
+      style: secondary
+      start: 0
+      end: 16

@@ -1,0 +1,32 @@
+id: missing-init-return-type
+snapshots:
+  ? |
+    class C:
+        def __init__(self):
+            pass
+  : fixed: |
+      class C:
+          def __init__(self) -> None:
+            pass
+    labels:
+    - source: |-
+        def __init__(self):
+                pass
+      style: primary
+      start: 13
+      end: 45
+  ? |
+    class C:
+        def __init__(self, name: str):
+            self.name = name
+  : fixed: |
+      class C:
+          def __init__(self, name: str) -> None:
+            self.name = name
+    labels:
+    - source: |-
+        def __init__(self, name: str):
+                self.name = name
+      style: primary
+      start: 13
+      end: 68

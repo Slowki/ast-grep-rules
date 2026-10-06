@@ -1,0 +1,77 @@
+id: no-flax-linen
+snapshots:
+  ? |
+    from flax import linen
+  : labels:
+    - source: from flax import linen
+      style: primary
+      start: 0
+      end: 22
+    - source: linen
+      style: secondary
+      start: 17
+      end: 22
+  ? |
+    from flax import linen as nn
+  : labels:
+    - source: from flax import linen as nn
+      style: primary
+      start: 0
+      end: 28
+  ? |
+    from flax import linen as nn, serialization
+  : labels:
+    - source: from flax import linen as nn, serialization
+      style: primary
+      start: 0
+      end: 43
+  ? |
+    from flax import linen, serialization
+  : labels:
+    - source: from flax import linen, serialization
+      style: primary
+      start: 0
+      end: 37
+    - source: linen
+      style: secondary
+      start: 17
+      end: 22
+  ? |
+    from flax import serialization, linen
+  : labels:
+    - source: from flax import serialization, linen
+      style: primary
+      start: 0
+      end: 37
+    - source: linen
+      style: secondary
+      start: 32
+      end: 37
+  ? |
+    from flax.linen import Dense, LayerNorm
+  : labels:
+    - source: from flax.linen import Dense, LayerNorm
+      style: primary
+      start: 0
+      end: 39
+  ? |
+    import flax.linen
+  : labels:
+    - source: import flax.linen
+      style: primary
+      start: 0
+      end: 17
+  ? |
+    import flax.linen as nn
+  : labels:
+    - source: import flax.linen as nn
+      style: primary
+      start: 0
+      end: 23
+  ? |
+    import flax.linen.attention
+  : labels:
+    - source: import flax.linen.attention
+      style: primary
+      start: 0
+      end: 27

@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-redundant-pass-after-docstring
+language: python
+severity: warning
+description: Remove redundant `pass` when a docstring already satisfies the function body.
+rule:
+  any:
+    - all:
+        - kind: pass_statement
+        - inside:
+            pattern: |
+              def $NAME($$$A) -> $R:
+                """$S"""
+                pass
+            stopBy: end
+    - all:
+        - kind: pass_statement
+        - inside:
+            pattern: |
+              def $NAME($$$A):
+                """$S"""
+                pass
+            stopBy: end
+    - all:
+        - kind: pass_statement
+        - inside:
+            pattern: |
+              async def $NAME($$$A) -> $R:
+                """$S"""
+                pass
+            stopBy: end
+    - all:
+        - kind: pass_statement
+        - inside:
+            pattern: |
+              async def $NAME($$$A):
+                """$S"""
+                pass
+            stopBy: end
+
+fix: ""

@@ -1,0 +1,6 @@
+id: remove-future-annotations
+language: python
+severity: warning
+rule:
+  pattern: from __future__ import annotations
+fix: ""

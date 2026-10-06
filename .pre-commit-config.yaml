@@ -1,0 +1,23 @@
+exclude: tests/__snapshots__
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-illegal-windows-names
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+  - repo: local
+    hooks:
+      - id: oxfmt
+        name: oxfmt (format)
+        entry: npx --yes oxfmt@0.66.0
+        env:
+          CI: "1"
+          NO_COLOR: "1"
+        language: system
+        require_serial: true
+        args: [--no-error-on-unmatched-pattern]
+        types: [text]

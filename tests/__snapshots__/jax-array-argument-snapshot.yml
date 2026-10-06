@@ -1,0 +1,67 @@
+id: jax-array-argument
+snapshots:
+  ? |
+    async def async_accepts_array(value: jax.Array):
+        return value
+  : labels:
+    - source: jax.Array
+      style: primary
+      start: 37
+      end: 46
+    - source: jax.Array
+      style: secondary
+      start: 37
+      end: 46
+    - source: '(value: jax.Array)'
+      style: secondary
+      start: 29
+      end: 47
+  ? |
+    class Model:
+        async def update(self, value: jax.Array) -> None:
+            self.value = value
+  : labels:
+    - source: jax.Array
+      style: primary
+      start: 47
+      end: 56
+    - source: jax.Array
+      style: secondary
+      start: 47
+      end: 56
+    - source: '(self, value: jax.Array)'
+      style: secondary
+      start: 33
+      end: 57
+  ? |
+    def accepts_array(value: jax.Array) -> jax.Array:
+        return value
+  : labels:
+    - source: jax.Array
+      style: primary
+      start: 25
+      end: 34
+    - source: jax.Array
+      style: secondary
+      start: 25
+      end: 34
+    - source: '(value: jax.Array)'
+      style: secondary
+      start: 17
+      end: 35
+  ? |
+    def accepts_nested_array(value: list[jax.Array]):
+        return value
+  : labels:
+    - source: jax.Array
+      style: primary
+      start: 37
+      end: 46
+    - source: jax.Array
+      style: secondary
+      start: 37
+      end: 46
+    - source: '(value: list[jax.Array])'
+      style: secondary
+      start: 24
+      end: 48

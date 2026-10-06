@@ -1,0 +1,9 @@
+id: optional-to-none-union
+valid:
+  - |
+    def parse(value: int) -> int:
+        return value
+invalid:
+  - |
+    def parse(value: Optional[int]) -> int:
+        return value

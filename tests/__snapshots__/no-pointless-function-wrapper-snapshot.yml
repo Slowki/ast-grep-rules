@@ -1,0 +1,56 @@
+id: no-pointless-function-wrapper
+snapshots:
+  ? |
+    async def async_wrap():
+        return await other()
+  : labels:
+    - source: |-
+        async def async_wrap():
+            return await other()
+      style: primary
+      start: 0
+      end: 48
+  ? |
+    async def complex_wrap():
+        return a.b.c()
+  : labels:
+    - source: |-
+        async def complex_wrap():
+            return a.b.c()
+      style: primary
+      start: 0
+      end: 44
+  ? |
+    def foo(x: int) -> bool:
+        """Check a condition."""
+        return bar(x)
+  : labels:
+    - source: |-
+        def foo(x: int) -> bool:
+            """Check a condition."""
+            return bar(x)
+      style: primary
+      start: 0
+      end: 71
+  ? |
+    def function_a() -> bool:
+        """Check a condition."""
+        return function_b()
+  : labels:
+    - source: |-
+        def function_a() -> bool:
+            """Check a condition."""
+            return function_b()
+      style: primary
+      start: 0
+      end: 78
+  ? |
+    def passthrough(a: int, b: str) -> bool:
+        return target(a, b)
+  : labels:
+    - source: |-
+        def passthrough(a: int, b: str) -> bool:
+            return target(a, b)
+      style: primary
+      start: 0
+      end: 64

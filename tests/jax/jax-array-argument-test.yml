@@ -1,0 +1,30 @@
+id: jax-array-argument
+valid:
+  - |
+    def accepts_array_like(value: ArrayLike) -> ArrayLike:
+        return value
+  - |
+    def uses_default(value=jax.Array):
+        return value
+  - |
+    def returns_array(value):
+        return value
+
+    result: jax.Array = returns_array(None)
+  - |
+    def returns_array(value) -> jax.Array:
+        return value
+  - |
+    def accepts_nested_array(value: list[jax.Array]):
+        return value
+invalid:
+  - |
+    def accepts_array(value: jax.Array) -> jax.Array:
+        return value
+  - |
+    async def async_accepts_array(value: jax.Array):
+        return value
+  - |
+    class Model:
+        async def update(self, value: jax.Array) -> None:
+            self.value = value

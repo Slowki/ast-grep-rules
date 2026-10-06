@@ -1,0 +1,21 @@
+id: no-redundant-parentheses-in-if-statement
+valid:
+  - |
+    if len(args) > 1:
+      return f"command {args[1]}"
+  - |
+    if (lambda value: value):
+      return "present"
+  - |
+    if (
+      value
+      and enabled
+    ):
+      return "present"
+invalid:
+  - |
+    if (len(args) > 1):
+      return f"command {args[1]}"
+  - |
+    if (value := get_value()):
+      return "present"

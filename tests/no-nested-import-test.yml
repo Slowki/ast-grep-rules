@@ -1,0 +1,108 @@
+id: no-nested-import-statement
+valid:
+  - |
+    import os
+  - |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        import json
+  - |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        import json
+        import sys
+  - |
+    from typing import TYPE_CHECKING
+
+    def f():
+        if TYPE_CHECKING:
+            import json
+  - |
+    from typing import TYPE_CHECKING
+
+    class C:
+        if TYPE_CHECKING:
+            import json
+invalid:
+  - |
+    def f():
+        import sys
+  - |
+    async def g():
+        import sys
+  - |
+    class C:
+        import json
+  - |
+    if True:
+        import json
+  - |
+    try:
+        import json
+    except ImportError:
+        pass
+  - |
+    while True:
+        import json
+  - |
+    for _ in []:
+        import json
+  - |
+    with open("x"):
+        import json
+  - |
+    x = 1
+    match x:
+        case _:
+            import json
+  - |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        if True:
+            import json
+---
+id: no-nested-import-from
+valid:
+  - |
+    from os import path
+  - |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from collections import abc
+  - |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from collections import abc
+        from typing import Any
+  - |
+    from typing import TYPE_CHECKING
+
+    def f():
+        if TYPE_CHECKING:
+            from typing import Any
+invalid:
+  - |
+    def f():
+        from os import path
+  - |
+    class C:
+        from os import path
+  - |
+    if True:
+        from os import path
+  - |
+    try:
+        from os import path
+    except ImportError:
+        pass
+  - |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        if True:
+            from os import path

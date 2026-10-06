@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-future-annotations-import
+language: python
+severity: warning
+description: "Remove `from __future__ import annotations`; Python 3.14+ uses deferred annotations by default (PEP 649)."
+
+rule:
+  any:
+    - pattern: from __future__ import annotations
+    - pattern: from __future__ import (annotations)
+fix: ""

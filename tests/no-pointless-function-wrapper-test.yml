@@ -1,0 +1,33 @@
+id: no-pointless-function-wrapper
+valid:
+  - |
+    def not_pointless(x: int) -> bool:
+        return bar(x + 1)
+  - |
+    def not_pointless2(x: int) -> bool:
+        return bar(1)
+  - |
+    def keeps_name(x: int) -> bool:
+        return bar(x=x)
+  - |
+    def with_side_effect() -> None:
+        log("hi")
+        return other()
+invalid:
+  - |
+    def function_a() -> bool:
+        """Check a condition."""
+        return function_b()
+  - |
+    def foo(x: int) -> bool:
+        """Check a condition."""
+        return bar(x)
+  - |
+    def passthrough(a: int, b: str) -> bool:
+        return target(a, b)
+  - |
+    async def async_wrap():
+        return await other()
+  - |
+    async def complex_wrap():
+        return a.b.c()

@@ -1,0 +1,21 @@
+id: inline-single-use-attribute-assignment
+valid:
+  - |
+    return str(result) if (result := items[0].attr) else None
+  # This is valid because the assignment is not adjacent to the return.
+  - |
+    first = items[0]
+    print(first)
+    return str(result) if (result := first.attr) else None
+  # This is valid because first is used in the consequence too.
+  - |
+    first = items[0]
+    return str(first) if (result := first.attr) else None
+  # This is valid because first is used in the fallback too.
+  - |
+    first = items[0]
+    return str(result) if (result := first.attr) else first
+invalid:
+  - |
+    first = items[0]
+    return str(result) if (result := first.attr) else None

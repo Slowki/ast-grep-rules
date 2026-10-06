@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: inline-single-use-attribute-assignment
+language: python
+severity: warning
+description: Inline adjacent assignments used only as attribute receivers.
+rule:
+  all:
+    - pattern: return $CONSEQUENCE if ($TARGET := $VARIABLE.$ATTRIBUTE) else $ALTERNATIVE
+    - follows:
+        pattern:
+          context: $VARIABLE = $EXPRESSION
+          selector: expression_statement
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    not:
+      any:
+        - pattern: $VARIABLE
+        - has:
+            pattern: $VARIABLE
+            stopBy: end
+  ALTERNATIVE:
+    not:
+      any:
+        - pattern: $VARIABLE
+        - has:
+            pattern: $VARIABLE
+            stopBy: end
+fix: return $CONSEQUENCE if ($TARGET := $EXPRESSION.$ATTRIBUTE) else $ALTERNATIVE
+---
+id: remove-inlined-single-use-attribute-assignment
+language: python
+severity: warning
+rule:
+  all:
+    - pattern:
+        context: $VARIABLE = $EXPRESSION
+        selector: expression_statement
+    - precedes:
+        pattern: return $CONSEQUENCE if ($TARGET := $VARIABLE.$ATTRIBUTE) else $ALTERNATIVE
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    not:
+      any:
+        - pattern: $VARIABLE
+        - has:
+            pattern: $VARIABLE
+            stopBy: end
+  ALTERNATIVE:
+    not:
+      any:
+        - pattern: $VARIABLE
+        - has:
+            pattern: $VARIABLE
+            stopBy: end
+fix: ""

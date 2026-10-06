@@ -1,0 +1,179 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-pointless-function-wrapper
+language: python
+severity: warning
+description: "Function only forwards to another callable with the same positional arguments; call the target directly or document why a wrapper exists."
+rule:
+  any:
+    - pattern: |
+        def $OUTER():
+          return $INNER()
+    - pattern: |
+        async def $OUTER():
+          return await $INNER()
+    - pattern: |
+        def $OUTER() -> $R:
+          return $INNER()
+    - pattern: |
+        def $OUTER():
+          """$DOC"""
+          return $INNER()
+    - pattern: |
+        def $OUTER() -> $R:
+          """$DOC"""
+          return $INNER()
+    - pattern: |
+        def $OUTER($X):
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X) -> $R:
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X: $T):
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X: $T) -> $R:
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X):
+          """$DOC"""
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X) -> $R:
+          """$DOC"""
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X: $T):
+          """$DOC"""
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($X: $T) -> $R:
+          """$DOC"""
+          return $INNER($X)
+    - pattern: |
+        def $OUTER($A, $B):
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B) -> $R:
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B):
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B) -> $R:
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB):
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB) -> $R:
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB):
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB) -> $R:
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B):
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B) -> $R:
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B):
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A: $TA, $B) -> $R:
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B: $TB):
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B: $TB) -> $R:
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B: $TB):
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B: $TB) -> $R:
+          """$DOC"""
+          return $INNER($A, $B)
+    - pattern: |
+        def $OUTER($A, $B, $C):
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A, $B, $C) -> $R:
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A, $B, $C):
+          """$DOC"""
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A, $B, $C) -> $R:
+          """$DOC"""
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB, $C: $TC):
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB, $C: $TC) -> $R:
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB, $C: $TC):
+          """$DOC"""
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER($A: $TA, $B: $TB, $C: $TC) -> $R:
+          """$DOC"""
+          return $INNER($A, $B, $C)
+    - pattern: |
+        def $OUTER(*$ARGS):
+          return $INNER(*$ARGS)
+    - pattern: |
+        def $OUTER(*$ARGS) -> $R:
+          return $INNER(*$ARGS)
+    - pattern: |
+        def $OUTER(*$ARGS):
+          """$DOC"""
+          return $INNER(*$ARGS)
+    - pattern: |
+        def $OUTER(*$ARGS) -> $R:
+          """$DOC"""
+          return $INNER(*$ARGS)
+    - pattern: |
+        def $OUTER(**$KW):
+          return $INNER(**$KW)
+    - pattern: |
+        def $OUTER(**$KW) -> $R:
+          return $INNER(**$KW)
+    - pattern: |
+        def $OUTER(**$KW):
+          """$DOC"""
+          return $INNER(**$KW)
+    - pattern: |
+        def $OUTER(**$KW) -> $R:
+          """$DOC"""
+          return $INNER(**$KW)
+    - pattern: |
+        def $OUTER(*$ARGS, **$KW):
+          return $INNER(*$ARGS, **$KW)
+    - pattern: |
+        def $OUTER(*$ARGS, **$KW) -> $R:
+          return $INNER(*$ARGS, **$KW)
+    - pattern: |
+        def $OUTER(*$ARGS, **$KW):
+          """$DOC"""
+          return $INNER(*$ARGS, **$KW)
+    - pattern: |
+        def $OUTER(*$ARGS, **$KW) -> $R:
+          """$DOC"""
+          return $INNER(*$ARGS, **$KW)

@@ -1,0 +1,152 @@
+id: no-nested-import-statement
+snapshots:
+  ? |
+    async def g():
+        import sys
+  : labels:
+    - source: import sys
+      style: primary
+      start: 19
+      end: 29
+    - source: |-
+        async def g():
+            import sys
+      style: secondary
+      start: 0
+      end: 29
+  ? |
+    class C:
+        import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 13
+      end: 24
+    - source: |-
+        class C:
+            import json
+      style: secondary
+      start: 0
+      end: 24
+  ? |
+    def f():
+        import sys
+  : labels:
+    - source: import sys
+      style: primary
+      start: 13
+      end: 23
+    - source: |-
+        def f():
+            import sys
+      style: secondary
+      start: 0
+      end: 23
+  ? |
+    for _ in []:
+        import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 17
+      end: 28
+    - source: |-
+        for _ in []:
+            import json
+      style: secondary
+      start: 0
+      end: 28
+  ? |
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        if True:
+            import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 73
+      end: 84
+    - source: |-
+        if True:
+                import json
+      style: secondary
+      start: 56
+      end: 84
+  ? |
+    if True:
+        import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 13
+      end: 24
+    - source: |-
+        if True:
+            import json
+      style: secondary
+      start: 0
+      end: 24
+  ? |
+    try:
+        import json
+    except ImportError:
+        pass
+  : labels:
+    - source: import json
+      style: primary
+      start: 9
+      end: 20
+    - source: |-
+        try:
+            import json
+        except ImportError:
+            pass
+      style: secondary
+      start: 0
+      end: 49
+  ? |
+    while True:
+        import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 16
+      end: 27
+    - source: |-
+        while True:
+            import json
+      style: secondary
+      start: 0
+      end: 27
+  ? |
+    with open("x"):
+        import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 20
+      end: 31
+    - source: |-
+        with open("x"):
+            import json
+      style: secondary
+      start: 0
+      end: 31
+  ? |
+    x = 1
+    match x:
+        case _:
+            import json
+  : labels:
+    - source: import json
+      style: primary
+      start: 35
+      end: 46
+    - source: |-
+        match x:
+            case _:
+                import json
+      style: secondary
+      start: 6
+      end: 46

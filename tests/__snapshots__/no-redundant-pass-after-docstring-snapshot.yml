@@ -1,0 +1,54 @@
+id: no-redundant-pass-after-docstring
+snapshots:
+  ? |
+    async def async_doc() -> None:
+        """Async."""
+        pass
+  : fixed: "async def async_doc() -> None:\n    \"\"\"Async.\"\"\"\n    \n"
+    labels:
+    - source: pass
+      style: primary
+      start: 52
+      end: 56
+    - source: |-
+        async def async_doc() -> None:
+            """Async."""
+            pass
+      style: secondary
+      start: 0
+      end: 56
+  ? |
+    class A:
+        def b(self) -> None:
+            """My thing."""
+            pass
+  : fixed: "class A:\n    def b(self) -> None:\n        \"\"\"My thing.\"\"\"\n        \n"
+    labels:
+    - source: pass
+      style: primary
+      start: 66
+      end: 70
+    - source: |-
+        def b(self) -> None:
+                """My thing."""
+                pass
+      style: secondary
+      start: 13
+      end: 70
+  ? |
+    def documented_empty() -> None:
+        """Only a docstring."""
+        pass
+  : fixed: "def documented_empty() -> None:\n    \"\"\"Only a docstring.\"\"\"\n    \n"
+    labels:
+    - source: pass
+      style: primary
+      start: 64
+      end: 68
+    - source: |-
+        def documented_empty() -> None:
+            """Only a docstring."""
+            pass
+      style: secondary
+      start: 0
+      end: 68

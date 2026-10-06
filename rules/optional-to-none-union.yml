@@ -1,0 +1,8 @@
+id: optional-to-none-union
+language: python
+severity: warning
+rule:
+  pattern:
+    context: "a: Optional[$T]"
+    selector: generic_type
+fix: $T | None

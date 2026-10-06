@@ -1,0 +1,13 @@
+id: remove-future-annotations
+snapshots:
+  ? |
+    from __future__ import annotations
+    value = 1
+  : fixed: |2
+
+      value = 1
+    labels:
+    - source: from __future__ import annotations
+      style: primary
+      start: 0
+      end: 34

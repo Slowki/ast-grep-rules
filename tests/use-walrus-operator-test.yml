@@ -1,0 +1,25 @@
+id: use-walrus-operator
+valid:
+  - |
+    if x := get_id():
+      return x
+  # This is valid the if statement falls through
+  - |
+    x = get_id()
+    if x:
+      print(x)
+  # This is valid because x is being used to shorten the condition, but is never itself used
+  - |
+    x = get_id()
+    if x:
+      return y
+invalid:
+  - |
+    x = get_id()
+    if x:
+      return x
+  - |
+    x = get_id()
+    if x:
+      z = y + 1
+      return x

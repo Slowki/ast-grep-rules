@@ -1,0 +1,11 @@
+id: remove-future-annotations
+valid:
+  - |
+    from __future__ import division
+    value = 1 / 2
+  - |
+    import annotations
+invalid:
+  - |
+    from __future__ import annotations
+    value = 1

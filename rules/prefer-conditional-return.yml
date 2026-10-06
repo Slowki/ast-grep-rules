@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: prefer-conditional-return
+language: python
+severity: warning
+description: Use conditional expressions for adjacent conditional returns.
+rule:
+  all:
+    - pattern: |
+        if $EXPRESSION is not None:
+          return $EXPRESSION
+    - precedes:
+        pattern: return $ALTERNATIVE
+        stopBy: neighbor
+fix: return $EXPRESSION if $EXPRESSION is not None else $ALTERNATIVE
+---
+id: remove-conditional-return-fallback
+language: python
+severity: warning
+rule:
+  all:
+    - pattern: return $ALTERNATIVE
+    - follows:
+        pattern: |
+          if $EXPRESSION is not None:
+            return $EXPRESSION
+        stopBy: neighbor
+fix: ""

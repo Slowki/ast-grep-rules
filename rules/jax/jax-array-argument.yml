@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: jax-array-argument
+language: python
+severity: info
+description: "Consider replacing `jax.Array` with `ArrayLike` in function arguments."
+rule:
+  all:
+    - pattern: jax.Array
+    - inside:
+        kind: type
+        stopBy: end
+    - inside:
+        kind: parameters
+        stopBy: end
+    - not:
+        inside:
+          kind: generic_type
+          stopBy: end

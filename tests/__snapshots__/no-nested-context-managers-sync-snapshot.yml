@@ -1,0 +1,32 @@
+id: no-nested-context-managers-sync
+snapshots:
+  ? |
+    with foo:
+        with bar:
+            x = 1
+  : fixed: |
+      with (foo, bar):
+        x = 1
+    labels:
+    - source: |-
+        with foo:
+            with bar:
+                x = 1
+      style: primary
+      start: 0
+      end: 37
+  ? |
+    with open("a") as fa:
+        with open("b") as fb:
+            pass
+  : fixed: |
+      with (open("a") as fa, open("b") as fb):
+        pass
+    labels:
+    - source: |-
+        with open("a") as fa:
+            with open("b") as fb:
+                pass
+      style: primary
+      start: 0
+      end: 60

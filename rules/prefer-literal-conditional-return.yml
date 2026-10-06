@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: prefer-literal-conditional-return
+language: python
+severity: warning
+description: Use conditional expressions for adjacent conditional literal returns.
+rule:
+  all:
+    - pattern: |
+        if $CONDITION:
+          return $CONSEQUENCE
+    - precedes:
+        pattern: return $ALTERNATIVE
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    any:
+      - kind: integer
+      - kind: float
+      - kind: string
+      - kind: list
+      - kind: dictionary
+      - kind: set
+      - kind: tuple
+      - kind: "true"
+      - kind: "false"
+      - kind: "none"
+      - kind: "ellipsis"
+  ALTERNATIVE:
+    any:
+      - kind: integer
+      - kind: float
+      - kind: string
+      - kind: list
+      - kind: dictionary
+      - kind: set
+      - kind: tuple
+      - kind: "true"
+      - kind: "false"
+      - kind: "none"
+      - kind: "ellipsis"
+fix: return $CONSEQUENCE if ($CONDITION) else $ALTERNATIVE
+---
+id: remove-literal-conditional-return-fallback
+language: python
+severity: warning
+rule:
+  all:
+    - pattern: return $ALTERNATIVE
+    - follows:
+        pattern: |
+          if $CONDITION:
+            return $CONSEQUENCE
+        stopBy: neighbor
+constraints:
+  CONSEQUENCE:
+    any:
+      - kind: integer
+      - kind: float
+      - kind: string
+      - kind: list
+      - kind: dictionary
+      - kind: set
+      - kind: tuple
+      - kind: "true"
+      - kind: "false"
+      - kind: "none"
+      - kind: "ellipsis"
+  ALTERNATIVE:
+    any:
+      - kind: integer
+      - kind: float
+      - kind: string
+      - kind: list
+      - kind: dictionary
+      - kind: set
+      - kind: tuple
+      - kind: "true"
+      - kind: "false"
+      - kind: "none"
+      - kind: "ellipsis"
+fix: ""

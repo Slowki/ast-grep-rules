@@ -1,0 +1,49 @@
+id: inline-single-use-named-argument
+valid:
+  - |
+    result = function_a(
+      arg,
+      instance=ClassA(),
+    )
+  # This is valid because the assignment is not adjacent to the call.
+  - |
+    instance = ClassA()
+    print(instance)
+    result = function_a(
+      instance=instance,
+    )
+  # This is valid because the keyword argument name differs from the variable name.
+  - |
+    instance = ClassA()
+    result = function_a(
+      client=instance,
+    )
+  # This is valid because the variable is used again after the call.
+  - |
+    instance = ClassB()
+    result = function_a(
+      instance=instance,
+    )
+    function_b(instance=instance)
+  # This is valid because the expression uses await.
+  - |
+    instance = await function_c(arg)
+    result = function_d(instance=instance)
+invalid:
+  - |
+    instance = ClassA()
+    result = function_a(
+      arg,
+      instance=instance,
+    )
+  - |
+    value = instance_a.attr
+    result = await instance.function_e(
+      value=value,
+    )
+  - |
+    value = 1.0 / len(items)
+    ClassC(value=value)
+  - |
+    return_value = function_f([function_g()])
+    completion_mock = AsyncMock(return_value=return_value)

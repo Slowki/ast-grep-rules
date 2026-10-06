@@ -1,0 +1,16 @@
+id: prefer-generator-expressions
+language: python
+severity: warning
+rule:
+  pattern: $FUNC($LIST)
+constraints:
+  LIST: { kind: list_comprehension }
+  FUNC:
+    any:
+      - pattern: any
+      - pattern: all
+      - pattern: sum
+transform:
+  INNER:
+    substring: { source: $LIST, startChar: 1, endChar: -1 }
+fix: $FUNC($INNER)

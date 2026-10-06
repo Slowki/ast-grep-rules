@@ -1,0 +1,17 @@
+id: no-nested-context-managers-async
+snapshots:
+  ? |
+    async with foo:
+        async with bar:
+            x = 1
+  : fixed: |
+      async with (foo, bar):
+        x = 1
+    labels:
+    - source: |-
+        async with foo:
+            async with bar:
+                x = 1
+      style: primary
+      start: 0
+      end: 49

@@ -1,0 +1,9 @@
+id: prefer-generator-expressions
+valid:
+  - |
+    values = [value for value in range(10)]
+  - |
+    values = any(value for value in range(10))
+invalid:
+  - |
+    values = any([value for value in range(10)])

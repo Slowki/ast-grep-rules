@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: missing-init-return-type
+language: python
+severity: warning
+description: "`__init__` should be annotated with `-> None`."
+rule:
+  pattern: |
+    def __init__($$$A):
+      $$$BODY
+fix: |-
+  def __init__($$$A) -> None:
+    $$$BODY

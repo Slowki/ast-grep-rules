@@ -1,0 +1,9 @@
+id: remove-async-def
+valid:
+  - |
+    def fetch() -> None:
+        return None
+invalid:
+  - |
+    async def fetch():
+        await request()

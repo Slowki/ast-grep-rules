@@ -1,0 +1,11 @@
+id: prefer-generator-expressions
+snapshots:
+  ? |
+    values = any([value for value in range(10)])
+  : fixed: |
+      values = any(value for value in range(10))
+    labels:
+    - source: any([value for value in range(10)])
+      style: primary
+      start: 9
+      end: 44

@@ -1,0 +1,20 @@
+id: use-walrus-operator-in-conditional-return
+valid:
+  - |
+    return x[-1] if (x := get_id()) else None
+  # This is valid because the assignment is not adjacent to the return.
+  - |
+    x = get_id()
+    print(x)
+    return x if x else None
+  # This is valid because x is being used to shorten the condition, but is never itself used.
+  - |
+    x = get_id()
+    return y if x else None
+invalid:
+  - |
+    x = get_id()
+    return x if x else None
+  - |
+    value = function_a(arg)
+    return value[-1] if value else None

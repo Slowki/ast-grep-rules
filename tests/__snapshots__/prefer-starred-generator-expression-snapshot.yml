@@ -1,0 +1,29 @@
+id: prefer-starred-generator-expression
+snapshots:
+  ? |
+    print(*[(value, suffix) for value in values for suffix in suffixes])
+  : fixed: |
+      print(*((value, suffix) for value in values for suffix in suffixes))
+    labels:
+    - source: '*[(value, suffix) for value in values for suffix in suffixes]'
+      style: primary
+      start: 6
+      end: 67
+  ? |
+    print(*[value for value in values if value > 0])
+  : fixed: |
+      print(*(value for value in values if value > 0))
+    labels:
+    - source: '*[value for value in values if value > 0]'
+      style: primary
+      start: 6
+      end: 47
+  ? |
+    print(*[value for value in values])
+  : fixed: |
+      print(*(value for value in values))
+    labels:
+    - source: '*[value for value in values]'
+      style: primary
+      start: 6
+      end: 34

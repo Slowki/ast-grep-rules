@@ -1,0 +1,38 @@
+id: prefer-conditional-return
+snapshots:
+  ? |
+    if instance.value is not None:
+      return instance.value
+    return "fallback"
+  : fixed: |
+      return instance.value if instance.value is not None else "fallback"
+      return "fallback"
+    labels:
+    - source: |-
+        if instance.value is not None:
+          return instance.value
+      style: primary
+      start: 0
+      end: 54
+    - source: return "fallback"
+      style: secondary
+      start: 55
+      end: 72
+  ? |
+    if name is not None:
+      return name
+    return "fallback"
+  : fixed: |
+      return name if name is not None else "fallback"
+      return "fallback"
+    labels:
+    - source: |-
+        if name is not None:
+          return name
+      style: primary
+      start: 0
+      end: 34
+    - source: return "fallback"
+      style: secondary
+      start: 35
+      end: 52

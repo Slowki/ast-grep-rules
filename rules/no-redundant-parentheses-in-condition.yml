@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+
+id: no-redundant-parentheses-in-conditional-expression
+language: python
+severity: warning
+description: Remove redundant parentheses from conditional expression conditions.
+rule:
+  pattern: $CONSEQUENCE if ($CONDITION) else $ALTERNATIVE
+constraints:
+  CONDITION:
+    not:
+      any:
+        - kind: lambda
+        - kind: named_expression
+        - kind: tuple
+fix: $CONSEQUENCE if $CONDITION else $ALTERNATIVE
+---
+id: no-redundant-parentheses-in-if-statement
+language: python
+severity: warning
+description: Remove redundant parentheses from if statement conditions.
+rule:
+  all:
+    - pattern: ($CONDITION)
+    - inside:
+        kind: if_statement
+        field: condition
+        stopBy: neighbor
+constraints:
+  CONDITION:
+    all:
+      - regex: ^[^\n]+$
+      - not:
+          kind: lambda
+fix: $CONDITION
