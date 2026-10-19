@@ -23,6 +23,17 @@ rule:
                   pattern: $VARIABLE
                   stopBy: end
                 stopBy: end
+          - not:
+              has:
+                all:
+                  - pattern: $VARIABLE
+                  - not:
+                      inside:
+                        pattern:
+                          context: placeholder($$VARIABLE=$VARIABLE)
+                          selector: keyword_argument
+                        stopBy: end
+                stopBy: end
         stopBy: end
 constraints:
   EXPRESSION:
@@ -51,6 +62,17 @@ rule:
                 has:
                   pattern: $VARIABLE
                   stopBy: end
+                stopBy: end
+          - not:
+              has:
+                all:
+                  - pattern: $VARIABLE
+                  - not:
+                      inside:
+                        pattern:
+                          context: placeholder($$VARIABLE=$VARIABLE)
+                          selector: keyword_argument
+                        stopBy: end
                 stopBy: end
         stopBy: neighbor
 constraints:

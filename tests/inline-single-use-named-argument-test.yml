@@ -12,6 +12,13 @@ valid:
     result = function_a(
       instance=instance,
     )
+  # This is valid because the assignment is used twice in the call.
+  - |
+    instance = ClassA()
+    result = function_a(
+      instance=instance,
+      instance_2=instance,
+    )
   # This is valid because the keyword argument name differs from the variable name.
   - |
     instance = ClassA()
