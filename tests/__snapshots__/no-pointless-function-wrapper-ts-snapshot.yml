@@ -1,0 +1,112 @@
+id: no-pointless-function-wrapper-ts
+snapshots:
+  ? |
+    async function wrapperD(x: number) {
+      return target(x);
+    }
+  : labels:
+    - source: |-
+        async function wrapperD(x: number) {
+          return target(x);
+        }
+      style: primary
+      start: 0
+      end: 58
+  ? |
+    const asyncArrow = async (x: number) => target(x);
+  : labels:
+    - source: 'const asyncArrow = async (x: number) => target(x);'
+      style: primary
+      start: 0
+      end: 50
+  ? |
+    const blockArrow = (x: number) => {
+      return target(x);
+    };
+  : labels:
+    - source: |-
+        const blockArrow = (x: number) => {
+          return target(x);
+        };
+      style: primary
+      start: 0
+      end: 58
+  ? |
+    export const arrowWrapper = (x: number) => target(x);
+  : labels:
+    - source: 'const arrowWrapper = (x: number) => target(x);'
+      style: primary
+      start: 7
+      end: 53
+  ? |
+    export function wrapperE(a: number, b: string, c: boolean): boolean {
+      return target(a, b, c);
+    }
+  : labels:
+    - source: |-
+        function wrapperE(a: number, b: string, c: boolean): boolean {
+          return target(a, b, c);
+        }
+      style: primary
+      start: 7
+      end: 97
+  ? |
+    function genericWrapper<T>(x: T): T {
+      return target(x);
+    }
+  : labels:
+    - source: |-
+        function genericWrapper<T>(x: T): T {
+          return target(x);
+        }
+      style: primary
+      start: 0
+      end: 59
+  ? |
+    function restWrapper(...args: number[]) {
+      return target(...args);
+    }
+  : labels:
+    - source: |-
+        function restWrapper(...args: number[]) {
+          return target(...args);
+        }
+      style: primary
+      start: 0
+      end: 69
+  ? |
+    function wrapperA(): boolean {
+      return targetB();
+    }
+  : labels:
+    - source: |-
+        function wrapperA(): boolean {
+          return targetB();
+        }
+      style: primary
+      start: 0
+      end: 52
+  ? |
+    function wrapperB(x: number): boolean {
+      return target(x);
+    }
+  : labels:
+    - source: |-
+        function wrapperB(x: number): boolean {
+          return target(x);
+        }
+      style: primary
+      start: 0
+      end: 61
+  ? |
+    function wrapperC(a: number, b: string) {
+      return target(a, b);
+    }
+  : labels:
+    - source: |-
+        function wrapperC(a: number, b: string) {
+          return target(a, b);
+        }
+      style: primary
+      start: 0
+      end: 66

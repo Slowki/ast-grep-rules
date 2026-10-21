@@ -1,0 +1,58 @@
+id: no-pointless-function-wrapper-ts
+valid:
+  - |
+    function notForward(x: number) {
+      return bar(x + 1);
+    }
+  - |
+    function constantArg() {
+      return bar(1);
+    }
+  - |
+    function withSideEffect() {
+      log('hi');
+      return other();
+    }
+  - |
+    function notRest(...args: number[]) {
+      return bar(...args.map((n) => n + 1));
+    }
+  - |
+    const notArrow = (x: number) => bar({ x });
+invalid:
+  - |
+    function wrapperA(): boolean {
+      return targetB();
+    }
+  - |
+    function wrapperB(x: number): boolean {
+      return target(x);
+    }
+  - |
+    function wrapperC(a: number, b: string) {
+      return target(a, b);
+    }
+  - |
+    async function wrapperD(x: number) {
+      return target(x);
+    }
+  - |
+    export function wrapperE(a: number, b: string, c: boolean): boolean {
+      return target(a, b, c);
+    }
+  - |
+    export const arrowWrapper = (x: number) => target(x);
+  - |
+    const blockArrow = (x: number) => {
+      return target(x);
+    };
+  - |
+    const asyncArrow = async (x: number) => target(x);
+  - |
+    function restWrapper(...args: number[]) {
+      return target(...args);
+    }
+  - |
+    function genericWrapper<T>(x: T): T {
+      return target(x);
+    }

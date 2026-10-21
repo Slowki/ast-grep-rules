@@ -1,0 +1,156 @@
+id: no-pointless-function-wrapper-ts
+language: typescript
+severity: warning
+description: "Function only forwards to another callable with the same positional arguments; call the target directly or document why a wrapper exists."
+rule:
+  any:
+    # Function declarations (also match async, export, and export default variants)
+    - pattern: |
+        function $OUTER() {
+          return $INNER();
+        }
+    - pattern: |
+        function $OUTER(): $R {
+          return $INNER();
+        }
+    - pattern: |
+        function $OUTER($X) {
+          return $INNER($X);
+        }
+    - pattern: |
+        function $OUTER($X): $R {
+          return $INNER($X);
+        }
+    - pattern: |
+        function $OUTER($X: $T) {
+          return $INNER($X);
+        }
+    - pattern: |
+        function $OUTER($X: $T): $R {
+          return $INNER($X);
+        }
+    - pattern: |
+        function $OUTER($A, $B) {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A, $B): $R {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A: $TA, $B: $TB) {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A: $TA, $B: $TB): $R {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A: $TA, $B) {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A: $TA, $B): $R {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A, $B: $TB) {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A, $B: $TB): $R {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER($A, $B, $C) {
+          return $INNER($A, $B, $C);
+        }
+    - pattern: |
+        function $OUTER($A, $B, $C): $R {
+          return $INNER($A, $B, $C);
+        }
+    - pattern: |
+        function $OUTER($A: $TA, $B: $TB, $C: $TC) {
+          return $INNER($A, $B, $C);
+        }
+    - pattern: |
+        function $OUTER($A: $TA, $B: $TB, $C: $TC): $R {
+          return $INNER($A, $B, $C);
+        }
+    - pattern: |
+        function $OUTER(...$ARGS) {
+          return $INNER(...$ARGS);
+        }
+    - pattern: |
+        function $OUTER(...$ARGS): $R {
+          return $INNER(...$ARGS);
+        }
+    # Function declarations with type parameters
+    - pattern: |
+        function $OUTER<$$$GEN>($X: $T) {
+          return $INNER($X);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>($X: $T): $R {
+          return $INNER($X);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>($A: $TA, $B: $TB) {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>($A: $TA, $B: $TB): $R {
+          return $INNER($A, $B);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>($A, $B, $C) {
+          return $INNER($A, $B, $C);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>($A, $B, $C): $R {
+          return $INNER($A, $B, $C);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>(...$ARGS) {
+          return $INNER(...$ARGS);
+        }
+    - pattern: |
+        function $OUTER<$$$GEN>(...$ARGS): $R {
+          return $INNER(...$ARGS);
+        }
+    # Arrow functions assigned to const
+    - pattern: |
+        const $OUTER = () => $INNER();
+    - pattern: |
+        const $OUTER = (): $R => $INNER();
+    - pattern: |
+        const $OUTER = ($X) => $INNER($X);
+    - pattern: |
+        const $OUTER = ($X): $R => $INNER($X);
+    - pattern: |
+        const $OUTER = ($X: $T) => $INNER($X);
+    - pattern: |
+        const $OUTER = ($X: $T): $R => $INNER($X);
+    - pattern: |
+        const $OUTER = ($A, $B) => $INNER($A, $B);
+    - pattern: |
+        const $OUTER = ($A: $TA, $B: $TB) => $INNER($A, $B);
+    - pattern: |
+        const $OUTER = ($A, $B, $C) => $INNER($A, $B, $C);
+    - pattern: |
+        const $OUTER = ($A: $TA, $B: $TB, $C: $TC) => $INNER($A, $B, $C);
+    - pattern: |
+        const $OUTER = (...$ARGS) => $INNER(...$ARGS);
+    - pattern: |
+        const $OUTER = ($X: $T) => {
+          return $INNER($X);
+        };
+    # Async arrow functions
+    - pattern: |
+        const $OUTER = async () => $INNER();
+    - pattern: |
+        const $OUTER = async ($X) => $INNER($X);
+    - pattern: |
+        const $OUTER = async ($X: $T) => $INNER($X);
+    - pattern: |
+        const $OUTER = async ($A, $B) => $INNER($A, $B);

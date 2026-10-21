@@ -1,0 +1,54 @@
+id: no-pointless-function-wrapper-rust
+valid:
+  - |
+    fn not_forward(x: i32) -> i32 {
+        x + 1
+    }
+  - |
+    fn constant_arg() -> i32 {
+        bar(1)
+    }
+  - |
+    fn with_side_effect() {
+        log("hi");
+        other()
+    }
+  - |
+    fn renamed(x: i32) -> bool {
+        bar(x as i64)
+    }
+invalid:
+  - |
+    fn wrapper_a() -> bool {
+        target_b()
+    }
+  - |
+    fn wrapper_b(x: i32) -> bool {
+        target(x)
+    }
+  - |
+    pub fn wrapper_c(a: i32, b: &str) -> bool {
+        target(a, b)
+    }
+  - |
+    fn wrapper_d(a: i32, b: &str, c: bool) {
+        target(a, b, c)
+    }
+  - |
+    fn wrapper_e<T>(x: T) -> T {
+        target(x)
+    }
+  - |
+    async fn wrapper_f(x: i32) -> bool {
+        target(x)
+    }
+  - |
+    pub async fn wrapper_g() -> i32 {
+        target()
+    }
+  - |
+    fn wrapper_h() {
+        target();
+    }
+  - |
+    pub fn wrapper_i(x: i32) -> bool = target(x);

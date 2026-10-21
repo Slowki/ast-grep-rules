@@ -1,0 +1,105 @@
+id: no-pointless-function-wrapper-rust
+snapshots:
+  ? |
+    async fn wrapper_f(x: i32) -> bool {
+        target(x)
+    }
+  : labels:
+    - source: |-
+        async fn wrapper_f(x: i32) -> bool {
+            target(x)
+        }
+      style: primary
+      start: 0
+      end: 52
+  ? |
+    fn wrapper_a() -> bool {
+        target_b()
+    }
+  : labels:
+    - source: |-
+        fn wrapper_a() -> bool {
+            target_b()
+        }
+      style: primary
+      start: 0
+      end: 41
+  ? |
+    fn wrapper_b(x: i32) -> bool {
+        target(x)
+    }
+  : labels:
+    - source: |-
+        fn wrapper_b(x: i32) -> bool {
+            target(x)
+        }
+      style: primary
+      start: 0
+      end: 46
+  ? |
+    fn wrapper_d(a: i32, b: &str, c: bool) {
+        target(a, b, c)
+    }
+  : labels:
+    - source: |-
+        fn wrapper_d(a: i32, b: &str, c: bool) {
+            target(a, b, c)
+        }
+      style: primary
+      start: 0
+      end: 62
+  ? |
+    fn wrapper_e<T>(x: T) -> T {
+        target(x)
+    }
+  : labels:
+    - source: |-
+        fn wrapper_e<T>(x: T) -> T {
+            target(x)
+        }
+      style: primary
+      start: 0
+      end: 44
+  ? |
+    fn wrapper_h() {
+        target();
+    }
+  : labels:
+    - source: |-
+        fn wrapper_h() {
+            target();
+        }
+      style: primary
+      start: 0
+      end: 32
+  ? |
+    pub async fn wrapper_g() -> i32 {
+        target()
+    }
+  : labels:
+    - source: |-
+        pub async fn wrapper_g() -> i32 {
+            target()
+        }
+      style: primary
+      start: 0
+      end: 48
+  ? |
+    pub fn wrapper_c(a: i32, b: &str) -> bool {
+        target(a, b)
+    }
+  : labels:
+    - source: |-
+        pub fn wrapper_c(a: i32, b: &str) -> bool {
+            target(a, b)
+        }
+      style: primary
+      start: 0
+      end: 62
+  ? |
+    pub fn wrapper_i(x: i32) -> bool = target(x);
+  : labels:
+    - source: 'pub fn wrapper_i(x: i32) -> bool = target(x);'
+      style: primary
+      start: 0
+      end: 45

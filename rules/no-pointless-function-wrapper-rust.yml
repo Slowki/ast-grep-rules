@@ -1,0 +1,165 @@
+id: no-pointless-function-wrapper-rust
+language: rust
+severity: warning
+description: "Function only forwards to another callable with the same positional arguments; call the target directly or document why a wrapper exists."
+rule:
+  any:
+    # Zero arguments
+    - pattern: |
+        fn $OUTER() {
+          $INNER()
+        }
+    - pattern: |
+        fn $OUTER() {
+          $INNER();
+        }
+    - pattern: |
+        fn $OUTER() -> $R {
+          $INNER()
+        }
+    - pattern: |
+        pub fn $OUTER() {
+          $INNER()
+        }
+    - pattern: |
+        pub fn $OUTER() {
+          $INNER();
+        }
+    - pattern: |
+        pub fn $OUTER() -> $R {
+          $INNER()
+        }
+    # One argument
+    - pattern: |
+        fn $OUTER($X: $T) {
+          $INNER($X)
+        }
+    - pattern: |
+        fn $OUTER($X: $T) {
+          $INNER($X);
+        }
+    - pattern: |
+        fn $OUTER($X: $T) -> $R {
+          $INNER($X)
+        }
+    - pattern: |
+        pub fn $OUTER($X: $T) {
+          $INNER($X)
+        }
+    - pattern: |
+        pub fn $OUTER($X: $T) {
+          $INNER($X);
+        }
+    - pattern: |
+        pub fn $OUTER($X: $T) -> $R {
+          $INNER($X)
+        }
+    # Two arguments
+    - pattern: |
+        fn $OUTER($A: $TA, $B: $TB) {
+          $INNER($A, $B)
+        }
+    - pattern: |
+        fn $OUTER($A: $TA, $B: $TB) -> $R {
+          $INNER($A, $B)
+        }
+    - pattern: |
+        pub fn $OUTER($A: $TA, $B: $TB) {
+          $INNER($A, $B)
+        }
+    - pattern: |
+        pub fn $OUTER($A: $TA, $B: $TB) -> $R {
+          $INNER($A, $B)
+        }
+    # Three arguments
+    - pattern: |
+        fn $OUTER($A: $TA, $B: $TB, $C: $TC) {
+          $INNER($A, $B, $C)
+        }
+    - pattern: |
+        fn $OUTER($A: $TA, $B: $TB, $C: $TC) -> $R {
+          $INNER($A, $B, $C)
+        }
+    - pattern: |
+        pub fn $OUTER($A: $TA, $B: $TB, $C: $TC) {
+          $INNER($A, $B, $C)
+        }
+    - pattern: |
+        pub fn $OUTER($A: $TA, $B: $TB, $C: $TC) -> $R {
+          $INNER($A, $B, $C)
+        }
+    # Generic functions
+    - pattern: |
+        fn $OUTER<$$$GEN>($X: $T) {
+          $INNER($X)
+        }
+    - pattern: |
+        fn $OUTER<$$$GEN>($X: $T) -> $R {
+          $INNER($X)
+        }
+    - pattern: |
+        pub fn $OUTER<$$$GEN>($X: $T) {
+          $INNER($X)
+        }
+    - pattern: |
+        pub fn $OUTER<$$$GEN>($X: $T) -> $R {
+          $INNER($X)
+        }
+    - pattern: |
+        fn $OUTER<$$$GEN>($X: $T) where $$$COND {
+          $INNER($X)
+        }
+    - pattern: |
+        fn $OUTER<$$$GEN>($X: $T) -> $R where $$$COND {
+          $INNER($X)
+        }
+    - pattern: |
+        pub fn $OUTER<$$$GEN>($X: $T) where $$$COND {
+          $INNER($X)
+        }
+    - pattern: |
+        pub fn $OUTER<$$$GEN>($X: $T) -> $R where $$$COND {
+          $INNER($X)
+        }
+    # Functions with a brace-less body
+    - pattern: |
+        fn $OUTER() -> $R = $INNER();
+    - pattern: |
+        pub fn $OUTER() -> $R = $INNER();
+    - pattern: |
+        fn $OUTER($X: $T) -> $R = $INNER($X);
+    - pattern: |
+        pub fn $OUTER($X: $T) -> $R = $INNER($X);
+    # Async functions
+    - pattern: |
+        async fn $OUTER() {
+          $INNER()
+        }
+    - pattern: |
+        async fn $OUTER() -> $R {
+          $INNER()
+        }
+    - pattern: |
+        pub async fn $OUTER() {
+          $INNER()
+        }
+    - pattern: |
+        pub async fn $OUTER() -> $R {
+          $INNER()
+        }
+    - pattern: |
+        async fn $OUTER($X: $T) {
+          $INNER($X)
+        }
+    - pattern: |
+        async fn $OUTER($X: $T) -> $R {
+          $INNER($X)
+        }
+    - pattern: |
+        pub async fn $OUTER($X: $T) {
+          $INNER($X)
+        }
+    - pattern: |
+        pub async fn $OUTER($X: $T) -> $R {
+          $INNER($X)
+        }
